@@ -1,0 +1,46 @@
+{
+  "name": "di-box",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "unit": "karma start karma.conf.cjs --single-run",
+    "coverage": "karma start karma.conf.cjs --single-run --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.7.5",
+    "babel-loader": "^8.0.6",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "jasmine-core": "^2.9.1",
+    "karma": "^3.1.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage-istanbul-reporter": "^2.0.4",
+    "karma-jasmine": "^1.1.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^3.0.5",
+    "webpack": "^4.44.0"
+  },
+  "comments": {
+    "devDependencies": {
+      "@babel/plugin-proposal-function-bind": "::this.method syntax",
+      "@babel/plugin-proposal-object-rest-spread": "...{} syntax",
+      "@babel/plugin-syntax-async-generators": "sync await tests",
+      "@babel/plugin-syntax-dynamic-import": "import()",
+      "@babel/plugin-transform-runtime": "reuse babel helpers",
+      "jasmine-core": "tests, old version for test with polyfills",
+      "karma": "tests",
+      "uglifyjs-webpack-plugin": "minify js",
+      "istanbul-instrumenter-loader": "coverage",
+      "webpack-merge": "merge two webpack configs"
+    }
+  }
+}
