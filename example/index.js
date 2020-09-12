@@ -7,12 +7,11 @@ import {App} from "./App.js";
 import {Config} from "./Config.js";
 
 const fnCase = function( sCaseName, oDeps ) {
-	console.log( sCaseName );
+	console.log( '___' + sCaseName + '___' );
 	const oRootBox = new RootBox( oDeps );
 	const oApp = oRootBox.box( 'main' ).newApp();
 	oApp.main( 0 );
 	oApp.main( Date.now() );
-	console.log( "\n\n" );
 }
 
 fnCase( 'base deps', {

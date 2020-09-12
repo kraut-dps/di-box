@@ -15,13 +15,7 @@ var oConfig = {
 					options: {
 						presets: [
 							[
-								"@babel/preset-env",
-								{
-									"loose": false,
-									"targets": {
-										"ie": "9"
-									}
-								}
+								"@babel/preset-env"
 							]
 						],
 						plugins: [
