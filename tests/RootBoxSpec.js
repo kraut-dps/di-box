@@ -1,5 +1,6 @@
 import {RootBox} from "../src/RootBox.js";
 import {Box} from "../src/Box.js";
+import {fnRel} from "../src/fnRel.js";
 
 describe( "RootBox", () => {
 
@@ -53,7 +54,7 @@ describe( "RootBox", () => {
 		expect( oTest.run() ).toEqual(2 );
 	} );
 
-	it( "_fnRel", () => {
+	it( "fnRel", () => {
 		class TestError extends Error {}
 		class TestClass {
 			newError;
@@ -78,6 +79,8 @@ describe( "RootBox", () => {
 			}
 		}
 
+		let oRootBox, oTest;
+
 		let oDeps = {
 			boxWithError: {
 				_Box: BoxWithError,
@@ -86,13 +89,9 @@ describe( "RootBox", () => {
 			boxWithTest: {
 				_Box: BoxWithTest,
 				TestClass: TestClass,
-				_fnRel: ( oRoot, oBox ) => {
-					oBox.newError = oRoot.box( 'boxWithError' ).newError;
-				}
+				newError: fnRel( 'boxWithError' )
 			}
 		};
-
-		let oRootBox, oTest;
 
 		oRootBox = new RootBox( oDeps );
 		oTest = oRootBox.box( 'boxWithTest' ).newTest();
@@ -102,6 +101,29 @@ describe( "RootBox", () => {
 		} catch ( e ) {
 			expect( e instanceof TestError ).toEqual(true );
 		}
+
+		// тоже самое с fnRel sMethod заполненным
+		oDeps = {
+			boxWithError: {
+				_Box: BoxWithError,
+				Error: TestError
+			},
+			boxWithTest: {
+				_Box: BoxWithTest,
+				TestClass: TestClass,
+				newError: fnRel( 'boxWithError', 'newError' )
+			}
+		};
+
+		oRootBox = new RootBox( oDeps );
+		oTest = oRootBox.box( 'boxWithTest' ).newTest();
+		try{
+			oTest.run();
+			fail();
+		} catch ( e ) {
+			expect( e instanceof TestError ).toEqual(true );
+		}
+
 	} );
 
 	it( "bad deps", () => {

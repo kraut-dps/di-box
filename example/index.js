@@ -1,4 +1,4 @@
-import {RootBox} from "di-box";
+import {RootBox, fnRel} from "di-box";
 import {AppBox} from "./AppBox.js";
 import {OtherBox} from "./OtherBox.js";
 import {DateBase} from "./DateBase.js";
@@ -70,9 +70,7 @@ fnCase( "OutputCustom from OtherBox", {
 		Config: Config,
 		Date: DateBase,
 		Output: OutputConsole,
-		_fnRel: ( oRootBox, oBox ) => {
-			oBox.oneOutput = oRootBox.box( 'other' ).oneOutput;
-		}
+		oneOutput: fnRel( 'other' )
 	},
 	other: {
 		_Box: OtherBox,

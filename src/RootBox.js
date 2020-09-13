@@ -1,4 +1,5 @@
 import {Box} from "./Box.js";
+import {RelType} from "./RelType.js";
 
 /**
  * коробка коробок
@@ -23,7 +24,7 @@ export class RootBox extends Box {
 
 	box( sName ) {
 		if ( !this._oOne[sName] ) {
-			const { _Box, _fnRel, ...oDeps } = this.oOpts[sName];
+			const { _Box, ...oDeps } = this.oOpts[sName];
 
 			if( typeof _Box === 'undefined' ) {
 				throw new Error( sName + '._Box prop required' );
@@ -31,11 +32,19 @@ export class RootBox extends Box {
 
 			const oBox = new _Box();
 
+			// relations
+			for( let sDep in oDeps ) {
+				if( oDeps[ sDep ] instanceof RelType ) {
+					const { sBox, sMethod } =  oDeps[ sDep ];
+					oDeps[ sDep ] = this.box( sBox )[ sMethod || sDep ];
+				}
+			}
+
 			Object.assign( oBox, oDeps );
 
-			if( _fnRel ) {
-				_fnRel( this, oBox );
-			}
+			//if( _fnRel ) {
+			//	_fnRel( this, oBox );
+			//}
 
 			this._initCheck( oBox );
 
