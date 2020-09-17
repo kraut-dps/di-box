@@ -34,13 +34,15 @@ export class RootBox extends Box {
 
 			// relations
 			for( let sDep in oDeps ) {
-				if( oDeps[ sDep ] instanceof RelType ) {
+				let mDep = oDeps[ sDep ];
+				if( mDep instanceof RelType ) {
 					const { sBox, sMethod } =  oDeps[ sDep ];
-					oDeps[ sDep ] = this.box( sBox )[ sMethod || sDep ];
+					mDep = this.box( sBox )[ sMethod || sDep ];
 				}
+				oBox[ sDep ] = mDep;
 			}
 
-			Object.assign( oBox, oDeps );
+			//Object.assign( oBox, oDeps );
 
 			//if( _fnRel ) {
 			//	_fnRel( this, oBox );
