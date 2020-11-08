@@ -1,7 +1,14 @@
 var oConfig = {
-	entry: "./index.js",
+	entry: {
+		"example-di-box": __dirname + '/example-di-box/index.js',
+		"example-inversify": __dirname +'/example-inversify/index.ts',
+		"example-typedi": __dirname +'/example-typedi/index.ts',
+		"example-awilix": __dirname +'/example-awilix/index.ts',
+		"example-tsyringe": __dirname +'/example-tsyringe/index.ts',
+		"example-bottlejs": __dirname +'/example-bottlejs/index.js',
+	},
 	output: {
-		filename: "index.js",
+		filename: "[name]/index.js",
 		chunkFilename: '[name].js',
 		path: __dirname + '/build/',
 		publicPath: '/build/',
@@ -38,7 +45,15 @@ var oConfig = {
 				// https://github.com/webpack/webpack/issues/2031#issuecomment-219040479
 				exclude: /node_modules\/(?!(di-box)\/).*/
 			},
+			{
+				test: /\.ts$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
+			}
 		]
+	},
+	resolve: {
+		extensions: ['.ts', '.js']
 	},
 	devServer: {
 		contentBase: __dirname,

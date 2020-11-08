@@ -2,118 +2,195 @@
  * коробка конструкторов
  * при инициализации автоматически делает bind( this ) всех свойств-функций
  * если свойство начинается на "new*", дополнительно вызывает проверку результата, все свойства должны быть !== undefined
- * имеет вспомогательный метод one для организации singleton/service экземпляров
+ * имеет вспомогательный метод one() для организации singleton/service экземпляров
  * для работы метода one, требуется WeakMap
  */
-export class Box{
+export class Box {
 
-	/**
-	 * @type {WeakMap} синглетонов
-	 */
-	_oOne;
+  /**
+   * @type {string|null}
+   */
+  _sNeedCheckPrefix
 
-	constructor() {
-		this._autoBind();
-	}
+  /**
+   * @type {string|null}
+   */
+  _sProtectedPrefix
 
-	/**
-	 * метод по функции создания нового объекта, создает его и кеширует
-	 * @param {function} fnNew
-	 * @return {object}
-	 */
-	one( fnNew ) {
-		// не в конструкторе, потому что к моменту вызова конструктора может не быть
-		// полифила WeakMap
-		if( !this._oOne ) {
-			this._oOne = new WeakMap();
-		}
+  /**
+   * @type {WeakMap} синглетонов
+   */
+  _oOne
 
-		if( this._oOne.has( fnNew ) ) {
-			return this._oOne.get( fnNew );
-		} else {
-			const oObj = fnNew.call( this );
-			this._oOne.set( fnNew, oObj );
-			return oObj;
-		}
-	}
+  /**
+   * @type {boolean} была уже проверка самого Box?
+   */
+  _bSelfCheck = false
 
-	/**
-	 * автоустановка this контекста во все методы объекта
-	 * для методов new*, проверяет чтобы ни одно публичное свойство не содержало undefined
-	 */
-	_autoBind() {
-		let oObj = this;
-		do {
-			// проходимся по всем потомкам, до Box
-			if( Box === oObj.constructor ) {
-				break;
-			}
+  /**
+   * @type {boolean} один раз пропустить проверку
+   */
+  _bSkipCheck = false
 
-			// проходимся по всем свойствам, и находим функции
-			const aProps = Object.getOwnPropertyNames( oObj );
-			for( let i = 0; i < aProps.length; i++ ) {
-				let sPropName = aProps[ i ];
+  /**
+   * @param {string} sNeedCheckPrefix если свойство Box функция и начинается с этого префикса,
+   * нужно сделать initCheck() возвращемого значения
+   * @param {string} sProtectedPrefix если свойство с этим префиксом, при initCheck пропускаем его
+   */
+  constructor( sNeedCheckPrefix = 'new', sProtectedPrefix = '_' ) {
+    this._sNeedCheckPrefix = sNeedCheckPrefix
+    this._sProtectedPrefix = sProtectedPrefix
+    this._autoBind()
+  }
 
-				if( !this._isFn( sPropName ) ) {
-					continue;
-				}
+  /**
+   * метод по функции создания нового объекта, создает его и кеширует
+   * @param {function} fnNew
+   * @return {any}
+   */
+  one (fnNew) {
+    // не в конструкторе, потому что к моменту вызова конструктора может не быть
+    // полифила WeakMap
+    if (!this._oOne) {
+      this._oOne = new WeakMap()
+    }
 
-				// если свойство функция, и начинается с new... , добавляем в просто bind this
-				// проверку, что все свйойства не undefined
-				this[ sPropName ] = this._bind( this[ sPropName ], this._isBuilder( sPropName ) );
-			}
-		} while ( ( oObj = Object.getPrototypeOf( oObj ) ) );
-	}
+    if (this._oOne.has(fnNew)) {
+      return this._oOne.get(fnNew)
+    } else {
+      const oObj = fnNew.call(this)
+      this._oOne.set(fnNew, oObj)
+      return oObj
+    }
+  }
 
-	/**
-	 * привязка к методу контекста this
-	 * @param {function} fnMethod
-	 * @param {boolean} bWithInitCheck true означает с результатом выполнить еще _initCheck
-	 * @return {function}
-	 */
-	_bind( fnMethod, bWithInitCheck ) {
-		if( bWithInitCheck ) {
-			return ( ...aArgs ) => {
-				const oNewObj = fnMethod.call( this, ...aArgs );
-				this._initCheck( oNewObj );
-				return oNewObj;
-			};
-		} else {
-			return fnMethod.bind( this );
-		}
-	}
+  /**
+   * пройтись по публичным свойствам объекта, Error если хоть один undefined
+   * @param {object} oObj
+   * @param {string|null} sProtectedPrefix
+   */
+  initCheck (oObj, sProtectedPrefix = null) {
 
-	/**
-	 * пройтись по публичным свойствам объекта, Error если хоть один undefined
-	 * @param oObj
-	 */
-	_initCheck( oObj ) {
+    if (sProtectedPrefix === null) {
+      sProtectedPrefix = this._sProtectedPrefix
+    }
 
-		for( let sPropName in oObj ) {
+    for (let sPropName in oObj) {
 
-			// is protected prop
-			if( sPropName.substring( 0, 1 ) === '_' ) {
-				continue;
-			}
+      // is protected prop
+      if (sProtectedPrefix !== null && sPropName.indexOf(sProtectedPrefix) === 0) {
+        continue
+      }
 
-			if( typeof oObj[ sPropName ] !== 'undefined' ) {
-				continue;
-			}
+      if (typeof oObj[sPropName] !== 'undefined') {
+        continue
+      }
 
-			throw new Error( '"' + oObj.constructor.name + '.' + sPropName + '" object property value  is undefined' );
-		}
-	}
+      throw new Error('di-box: "' + oObj.constructor.name + '.' + sPropName + '" object property value is undefined')
+    }
+  }
 
-	/**
-	 * по названию свойства понять, билдер это или нет?
-	 * @param {string} sPropName
-	 * @return {boolean}
-	 */
-	_isBuilder( sPropName ) {
-		return sPropName.indexOf( 'new' ) === 0;
-	}
+  /**
+   * возможность пропустить следующую проверку initCheck
+   */
+  skipCheck () {
+    this._bSkipCheck = true
+  }
 
-	_isFn( sPropName ) {
-		return typeof this[ sPropName ] === 'function' && sPropName !== 'constructor';
-	}
+  /**
+   * сбросить все уже созданные синглетоны
+   */
+  reset() {
+    this._oOne = null;
+  }
+
+  /**
+   * автоустановка this контекста во все методы объекта
+   * для методов new*, проверяет чтобы ни одно публичное свойство не содержало undefined
+   */
+  _autoBind () {
+    let oObj = this
+    do {
+      // проходимся по всем потомкам, до Box
+      if (Box === oObj.constructor) {
+        break
+      }
+
+      // проходимся по всем свойствам, и находим функции
+      const aProps = Object.getOwnPropertyNames(oObj)
+      for (let i = 0; i < aProps.length; i++) {
+
+        let sPropName = aProps[i]
+
+        if (!this._isFn(sPropName)) {
+          continue
+        }
+
+        // делаем bind(this) c проверками, если необходимо
+        this[sPropName] = this._bind(this[sPropName], this._isNeedCheck(sPropName))
+      }
+    } while ((
+      oObj = Object.getPrototypeOf(oObj)
+    ))
+  }
+
+  /**
+   * привязка к методу контекста this
+   * @param {function} fnMethod
+   * @param {boolean} bWithInitCheck true означает с результатом выполнить еще initCheck
+   * @return {function}
+   */
+  _bind (fnMethod, bWithInitCheck) {
+
+    // return fnMethod.bind( this );
+
+    return (...aArgs) => {
+
+      // проверяем сам Box
+      this._selfCheck()
+
+      // .bind( this )
+      const oNewObj = fnMethod.call(this, ...aArgs)
+
+      // внутри fnMethod мог быть вызван .skipCheck()
+      if (this._bSkipCheck) {
+        bWithInitCheck = false
+        this._bSkipCheck = true
+      }
+
+      if (bWithInitCheck) {
+        this.initCheck(oNewObj)
+      }
+      return oNewObj
+    }
+  }
+
+  /**
+   * проверка самого Box
+   * @return void
+   */
+  _selfCheck () {
+    if (!this._bSelfCheck) {
+      this.initCheck(this, '_')
+      this._bSelfCheck = true
+    }
+  }
+
+  /**
+   * по названию свойства понять, нужно ли делать check
+   * @param {string} sPropName
+   * @return {boolean}
+   */
+  _isNeedCheck (sPropName) {
+    return this._sNeedCheckPrefix !== null && sPropName.indexOf(this._sNeedCheckPrefix) === 0
+  }
+
+  /**
+   * по названию свойства понять, функция это или нет
+   * @param {string} sPropName
+   * @return {boolean}
+   */
+  _isFn (sPropName) {
+    return typeof this[sPropName] === 'function' && sPropName !== 'constructor'
+  }
 }
