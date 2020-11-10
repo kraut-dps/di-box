@@ -4,13 +4,13 @@ import {IDate, IStorage, IApp, IConfig, ICase, IAppConstructor} from '../classes
 
 import {fnCases} from "../cases.js";
 
-import {App} from "../classesTypeScript/App.ts";
+import {App} from "../classesTs/App.ts";
 import oConfig from "../classesBase/configBase.js";
 import oConfigCustom from "../classesBase/configCustom.js";
-import {Date} from "../classesTypeScript/Date.ts";
-import {DateCustom} from "../classesTypeScript/DateCustom.ts";
-import {Storage} from "../classesTypeScript/Storage.ts";
-import {StorageCustom} from "../classesTypeScript/StorageCustom.ts";
+import {Date} from "../classesTs/Date.ts";
+import {DateCustom} from "../classesTs/DateCustom.ts";
+import {Storage} from "../classesTs/Storage.ts";
+import {StorageCustom} from "../classesTs/StorageCustom.ts";
 
 const fnBuildApp = ( { oConfig, App, Date, Storage } : ICase ) => {
 

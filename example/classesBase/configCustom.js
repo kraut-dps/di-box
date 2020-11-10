@@ -1,5 +1,5 @@
 export default {
-	sStorageConnect: "db:host=custom-host;db=custom-db",
+	sStorageConnect: "connect:custom",
 	sDateLocale: 'ru',
 	oDateOptions: {
 		timezone: 'Europe/Moscow'

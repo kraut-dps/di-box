@@ -1,4 +1,5 @@
-export class StorageBase {
-	protected sConnect: string;
+import {IStorage} from "./interfaces";
+
+export class StorageBase implements IStorage{
 	insert( sData: string ): void;
 }

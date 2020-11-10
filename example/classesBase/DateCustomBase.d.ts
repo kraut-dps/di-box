@@ -1,8 +1,10 @@
-import {IDateConstructor} from "./interfaces.ts";
-/*export class DateCustom implements IDate {
-    sLocale: string;
-    oOptions: object;
-    constructor(iDate: number);
-    format(): string;
-}*/
-declare var DateCustomBase: IDateConstructor;
+import {IDateInit, IDateOptions} from "./interfaces";
+
+export class DateCustomBase implements IDateInit{
+	constructor(iDate: number);
+
+	sLocale: string;
+	oOptions: IDateOptions;
+
+	format(): string;
+}

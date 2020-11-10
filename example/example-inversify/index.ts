@@ -3,7 +3,7 @@ import "reflect-metadata";
 
 import {fnCases} from "../cases.js";
 
-import {IDate, IStorage, IApp, ICase, IConfig} from '../classesBase/interfaces';
+import {IDate, IStorage, IApp, ICase, IConfig, IDateInit} from '../classesBase/interfaces';
 import oConfig from "../classesBase/configBase.js";
 import oConfigCustom from "../classesBase/configCustom.js";
 import {Date} from "./Date";
@@ -17,13 +17,13 @@ const fnBuildApp = ( {oConfig, App, Date, Storage}: ICase ) => {
 	const oContainer = new Container();
 	oContainer.bind<IConfig>( "oConfig" ).toConstantValue( oConfig );
 
-	oContainer.bind<interfaces.Newable<IDate>>( "Newable<IDate>" )
-		.toConstructor<IDate>( Date );
+	oContainer.bind<interfaces.Newable<IDateInit>>( "Newable<IDate>" )
+		.toConstructor<IDateInit>( Date );
 
 	oContainer.bind<interfaces.Factory<IDate>>( "newDate" )
 		.toFactory<IDate>( ( context: interfaces.Context ) => {
 			return ( iDate ) => {
-				const Date = context.container.get<interfaces.Newable<IDate>>( "Newable<IDate>" );
+				const Date = context.container.get<interfaces.Newable<IDateInit>>( "Newable<IDate>" );
 				const oDateBase = new Date( iDate );
 				const oConfig = context.container.get<IConfig>( "oConfig" );
 				oDateBase.sLocale = oConfig.sDateLocale;

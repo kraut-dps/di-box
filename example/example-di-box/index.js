@@ -1,4 +1,4 @@
-import {Box, RootBox} from "di-box";
+import {Box} from "di-box";
 
 import {AppBase} from "../classesBase/AppBase.js";
 
@@ -29,9 +29,9 @@ const fnBuildApp = ( { oConfig, App, Date, Storage } ) => {
 		}
 
 		newStorage() {
-			const oStorage = new this.Storage();
-			oStorage.sConnect = this.oConfig.sStorageConnect;
-			return oStorage;
+			return new this.Storage(
+				this.oConfig.sStorageConnect
+			);
 		}
 
 		oneStorage() {
@@ -46,17 +46,13 @@ const fnBuildApp = ( { oConfig, App, Date, Storage } ) => {
 		}
 	}
 
-	const oRootBox = new RootBox( {
-		main: {
-			_Box: AppBox,
-			App: App,
-			oConfig: oConfig,
-			Date: Date,
-			Storage: Storage
-		}
-	} );
+	const oBox = new AppBox();
+	oBox.App = App;
+	oBox.oConfig = oConfig;
+	oBox.Date = Date;
+	oBox.Storage = Storage;
 
-	return oRootBox.box( 'main' ).newApp();
+	return oBox.newApp();
 }
 
 fnCases( fnBuildApp, { oConfig, oConfigCustom, App:AppBase, Date: DateBase, DateCustom: DateCustomBase, Storage: StorageBase, StorageCustom: StorageCustomBase } );

@@ -1,16 +1,16 @@
 import {Container, Inject, Service} from "typedi";
 import "reflect-metadata";
-import {IDate, IStorage, IApp, IConfig, ICase} from '../classesBase/interfaces.ts';
+import {IDate, IStorage, IApp, IConfig, ICase} from '../classesBase/interfaces';
 
 import {fnCases} from "../cases.js";
 
-import {App} from "../classesTypeScript/App.ts";
+import {App} from "../classesTs/App";
 import oConfig from "../classesBase/configBase.js";
 import oConfigCustom from "../classesBase/configCustom.js";
-import {Date} from "../classesTypeScript/Date.ts";
-import {DateCustom} from "../classesTypeScript/DateCustom.ts";
-import {Storage} from "../classesTypeScript/Storage.ts";
-import {StorageCustom} from "../classesTypeScript/StorageCustom.ts";
+import {Date} from "../classesTs/Date";
+import {DateCustom} from "../classesTs/DateCustom";
+import {Storage} from "../classesTs/Storage";
+import {StorageCustom} from "../classesTs/StorageCustom";
 import {interfaces} from "inversify/dts/interfaces/interfaces";
 
 

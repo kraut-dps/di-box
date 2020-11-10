@@ -1,3 +1,3 @@
-import {IConfig} from "./interfaces.ts";
+import {IConfig} from "./interfaces";
 declare const oConfig: IConfig;
 export default oConfig;

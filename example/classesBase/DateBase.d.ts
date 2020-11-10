@@ -1,10 +1,10 @@
-/*export class DateBase {
+import {IDateInit, IDateOptions} from "./interfaces";
+
+export class DateBase implements IDateInit{
+	constructor(iDate: number);
+
 	sLocale: string;
-	oOptions: object;
-	constructor( iDate: number );
+	oOptions: IDateOptions;
+
 	format(): string;
-}*/
-
-import {IApp, IDate, IDateConstructor, IStorage} from "./interfaces.ts";
-
-declare var DateBase: IDateConstructor;
+}

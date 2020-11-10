@@ -1,6 +1,6 @@
 import {decorate, inject, injectable} from "inversify";
 import {IApp, IDate, IStorage} from "../classesBase/interfaces";
-import {App as AppOrigin} from "../classesTypeScript/App";
+import {App as AppOrigin} from "../classesTs/App";
 decorate(injectable(), AppOrigin);
 
 @injectable()

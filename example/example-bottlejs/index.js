@@ -1,12 +1,12 @@
 import Bottle from "bottlejs";
 
-import {App} from "../classes/App.js";
+import {App} from "../classesJs/App.js";
 
-import {Date} from "../classes/Date.js";
-import {DateCustom} from "../classes/DateCustom.js";
+import {Date} from "../classesJs/Date.js";
+import {DateCustom} from "../classesJs/DateCustom.js";
 
-import {Storage} from "../classes/Storage.js";
-import {StorageCustom} from "../classes/StorageCustom.js";
+import {Storage} from "../classesJs/Storage.js";
+import {StorageCustom} from "../classesJs/StorageCustom.js";
 
 import oConfig from "../classesBase/configBase.js";
 import oConfigCustom from "../classesBase/configCustom.js";

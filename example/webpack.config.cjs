@@ -1,6 +1,7 @@
 var oConfig = {
 	entry: {
 		"example-di-box": __dirname + '/example-di-box/index.js',
+		"example-di-box-ts": __dirname + '/example-di-box-ts/index.ts',
 		"example-inversify": __dirname +'/example-inversify/index.ts',
 		"example-typedi": __dirname +'/example-typedi/index.ts',
 		"example-awilix": __dirname +'/example-awilix/index.ts',

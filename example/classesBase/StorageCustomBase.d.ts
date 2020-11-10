@@ -1,7 +1,5 @@
-/*import {IStorage} from "./interfaces.ts";
-export class StorageCustomBase implements IStorage {
-	sConnect: string;
+import {IStorage} from "./interfaces";
+
+export class StorageCustomBase implements IStorage{
 	insert( sData: string ): void;
-}*/
-import {IApp, IDate, IDateConstructor, IStorageConstructor} from "./interfaces.ts";
-export const StorageCustomBase: IStorageConstructor;
+}

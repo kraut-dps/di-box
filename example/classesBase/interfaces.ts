@@ -1,42 +1,45 @@
-interface IDate {
-    sLocale: string;
-    oOptions: object;
+export interface IDate {
     format(): string;
 }
-interface IDateConstructor {
-    new( iDate: number ): IDate;
+export interface IDateOptions {
+    timeZone: string;
+}
+export interface IDateInit extends IDate{
+    sLocale: string;
+    oOptions: IDateOptions;
+}
+export interface IDateConstructor {
+    new( iDate: number ): IDateInit;
 }
 
-interface IStorage {
+export interface IStorage {
     insert( sData: string ): void;
 }
-interface IStorageConstructor {
+export interface IStorageConstructor {
     new( sConnect: string ): IStorage;
 }
 
-interface IApp {
+export interface IApp {
    main( iDate1: number, iDate2: number ): void;
 }
-interface IAppConstructor {
+
+export interface IAppConstructor {
     new( ...args: any[] ): IApp;
 }
 
-interface IDateOptions {
-    timeZone: string;
-}
-interface IConfig {
+export interface IConfig {
     sStorageConnect: string,
     sDateLocale: string,
     oDateOptions: IDateOptions
 }
 
-interface ICase {
+export interface ICase {
     oConfig: IConfig,
     App: IAppConstructor,
     Date: IDateConstructor,
     Storage: IStorageConstructor
 }
-interface IVars {
+export interface IVars {
     oConfig: IConfig,
     oConfigCustom: IConfig,
     App: IAppConstructor,
@@ -46,5 +49,4 @@ interface IVars {
     StorageCustom: IStorageConstructor
 }
 
-export { IApp, IAppConstructor, IDate, IDateConstructor, IConfig, IDateOptions, IStorage, IStorageConstructor, ICase, IVars };
 export type Newable<T> = { new (...args: any[]): T; };

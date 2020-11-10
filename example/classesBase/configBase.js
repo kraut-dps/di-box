@@ -1,5 +1,5 @@
 export default {
-	sStorageConnect: 'db:host=localhost;db=test',
+	sStorageConnect: 'connect:base',
 	sDateLocale: 'en',
 	oDateOptions: {
 		timeZone: 'UTC'

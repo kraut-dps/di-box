@@ -11,7 +11,7 @@
     "@owja/ioc": "^1.0.1",
     "awilix": "^4.2.6",
     "bottlejs": "^2.0.0",
-    "di-box": "^0.0.5",
+    "di-box": "^0.1.0",
     "inversify": "^5.0.1",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.3.0",

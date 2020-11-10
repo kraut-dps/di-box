@@ -1,4 +1,4 @@
-import {IApp,ICase, IVars} from "./classesBase/interfaces.ts";
+import {IApp,ICase, IVars} from "./classesBase/interfaces";
 
 //declare var oVars: IVars;
 
