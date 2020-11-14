@@ -1,8 +1,8 @@
 {
   "name": "di-box",
-  "version": "0.1.0",
-  "description": "",
-  "author": "",
+  "version": "0.2.0",
+  "description": "Lightweight dependency injection library",
+  "author": "kraut-dps",
   "license": "MIT",
   "type": "module",
   "types": "./types/Box.d.ts",

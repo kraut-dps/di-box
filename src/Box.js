@@ -1,4 +1,7 @@
 /**
+ * @typedef {{ bNeedSelfCheck: boolean?, sNeedCheckPrefix: string?, sProtectedPrefix: string? }} IOpts
+ */
+/**
  * коробка конструкторов
  * при инициализации автоматически делает bind( this ) всех свойств-функций
  * если свойство начинается на "new*", дополнительно вызывает проверку результата, все свойства должны быть !== undefined
@@ -18,14 +21,9 @@ export class Box {
   _sProtectedPrefix
 
   /**
-   * @type {WeakMap} синглетонов
-   */
-  _oOne
-
-  /**
    * @type {boolean} была уже проверка самого Box?
    */
-  _bSelfCheck = false
+  _bNeedSelfCheck
 
   /**
    * @type {boolean} один раз пропустить проверку
@@ -33,13 +31,23 @@ export class Box {
   _bSkipCheck = false
 
   /**
-   * @param {string} sNeedCheckPrefix если свойство Box функция и начинается с этого префикса,
-   * нужно сделать initCheck() возвращемого значения
-   * @param {string} sProtectedPrefix если свойство с этим префиксом, при initCheck пропускаем его
+   * @type {WeakMap} синглетонов
    */
-  constructor( sNeedCheckPrefix = 'new', sProtectedPrefix = '_' ) {
+  _oOne
+
+  /**
+   * oOpts.bNeedSelfCheck - нужно ли проверять сам Box на свойства undefined
+   * oOpts.sNeedCheckPrefix - возвращаемые значения методов с этим префиксом будут проверяться на undefined
+   * oOpts.sProtectedPrefix - особый префикс, при его наличии проверка на undefined пропускается
+   * @param {IOpts|null} oOpts
+   */
+  constructor (oOpts = null) {
+
+    const { bNeedSelfCheck = true, sNeedCheckPrefix = 'new', sProtectedPrefix = '_' } = oOpts || {};
+
     this._sNeedCheckPrefix = sNeedCheckPrefix
     this._sProtectedPrefix = sProtectedPrefix
+    this._bNeedSelfCheck = bNeedSelfCheck
     this._autoBind()
   }
 
@@ -100,8 +108,8 @@ export class Box {
   /**
    * сбросить все уже созданные синглетоны
    */
-  reset() {
-    this._oOne = null;
+  reset () {
+    this._oOne = null
   }
 
   /**
@@ -170,9 +178,9 @@ export class Box {
    * @return void
    */
   _selfCheck () {
-    if (!this._bSelfCheck) {
+    if (this._bNeedSelfCheck) {
       this.initCheck(this, '_')
-      this._bSelfCheck = true
+      this._bNeedSelfCheck = false
     }
   }
 

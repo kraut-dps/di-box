@@ -1,4 +1,7 @@
 /**
+ * @typedef {{ bNeedSelfCheck: boolean?, sNeedCheckPrefix: string?, sProtectedPrefix: string? }} IOpts
+ */
+/**
  * коробка конструкторов
  * при инициализации автоматически делает bind( this ) всех свойств-функций
  * если свойство начинается на "new*", дополнительно вызывает проверку результата, все свойства должны быть !== undefined
@@ -7,11 +10,12 @@
  */
 export class Box {
     /**
-     * @param {string} sNeedCheckPrefix если свойство Box функция и начинается с этого префикса,
-     * нужно сделать initCheck() возвращемого значения
-     * @param {string} sProtectedPrefix если свойство с этим префиксом, при initCheck пропускаем его
+     * oOpts.bNeedSelfCheck - нужно ли проверять сам Box на свойства undefined
+     * oOpts.sNeedCheckPrefix - возвращаемые значения методов с этим префиксом будут проверяться на undefined
+     * oOpts.sProtectedPrefix - особый префикс, при его наличии проверка на undefined пропускается
+     * @param {IOpts|null} oOpts
      */
-    constructor(sNeedCheckPrefix?: string, sProtectedPrefix?: string);
+    constructor(oOpts?: IOpts | null);
     /**
      * @type {string|null}
      */
@@ -21,17 +25,17 @@ export class Box {
      */
     _sProtectedPrefix: string | null;
     /**
-     * @type {WeakMap} синглетонов
-     */
-    _oOne: WeakMap<any, any>;
-    /**
      * @type {boolean} была уже проверка самого Box?
      */
-    _bSelfCheck: boolean;
+    _bNeedSelfCheck: boolean;
     /**
      * @type {boolean} один раз пропустить проверку
      */
     _bSkipCheck: boolean;
+    /**
+     * @type {WeakMap} синглетонов
+     */
+    _oOne: WeakMap<any, any>;
     /**
      * метод по функции создания нового объекта, создает его и кеширует
      * @param {function} fnNew
@@ -82,3 +86,8 @@ export class Box {
      */
     _isFn(sPropName: string): boolean;
 }
+export type IOpts = {
+    bNeedSelfCheck: boolean | null;
+    sNeedCheckPrefix: string | null;
+    sProtectedPrefix: string | null;
+};

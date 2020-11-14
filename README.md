@@ -45,6 +45,9 @@ const oApp = oBox.newApp();
 oApp.main(); 
 ```
 
+[Запустить в Codesandbox](https://codesandbox.io/s/github/kraut-dps/di-box/tree/0.1.0/examples/)
+( версии js и ts с интерфейсами )
+
 Автоматически проходит по всем свойствам создаваемых компонент и
 вызывает ошибку, если хоть одно свойство undefined, предыдущий пример:
 
@@ -53,7 +56,7 @@ oApp.main();
 	newApp() {
 		const oApp = new this.App();
 		//oApp.oneService = this.oneService;
-		return oApp; // будет ошибка oneService is undefined 
+		return oApp; // будет ошибка di-box oneService is undefined 
 	}
 ...
 ```
@@ -64,7 +67,7 @@ oApp.main();
 const oBox = new AppBox( null );
 oBox.Service = Service;
 
-const oApp = oBox.newApp(); // Error App is undefined
+const oApp = oBox.newApp(); // ошибки di-box не будет, 
 ...
 ```
 

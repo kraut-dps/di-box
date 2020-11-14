@@ -102,14 +102,14 @@ describe( "Box", () => {
 			}
 		}
 
-		let oBox = new BoxExt( 'new' );
+		let oBox = new BoxExt( { sNeedCheckPrefix: 'new' } );
 		try {
 			oBox.buildTest();
 		} catch( e ) {
 			fail()
 		}
 
-		oBox = new BoxExt( 'build' );
+		oBox = new BoxExt( { sNeedCheckPrefix: 'build' } );
 		try {
 			oBox.buildTest();
 			fail();
@@ -128,7 +128,7 @@ describe( "Box", () => {
 			}
 		}
 
-		let oBox = new BoxExt( 'new', '_' );
+		let oBox = new BoxExt( { sProtectedPrefix: '_' } );
 		try {
 			oBox.newTest();
 			fail()
@@ -136,7 +136,7 @@ describe( "Box", () => {
 			// потому что protectedProp будет считать свойством с undefined
 		}
 
-		oBox = new BoxExt( 'new', 'protected' );
+		oBox = new BoxExt( { sProtectedPrefix: 'protected' } );
 		try {
 			oBox.newTest();
 			// потому что protectedProp будет считатся protected, и пропустится
@@ -151,11 +151,18 @@ describe( "Box", () => {
 		class BoxExt extends Box {
 			TestClass;
 			newTest() {
-				return new this.TestClass();
 			}
 		}
 
-		let oBox = new BoxExt();
+		let oBox = new BoxExt({bNeedSelfCheck: false});
+		try {
+			oBox.newTest();
+			// no self check
+		} catch( e ) {
+			fail()
+		}
+
+		oBox = new BoxExt({bNeedSelfCheck: true});
 		try {
 			oBox.newTest();
 			fail()
