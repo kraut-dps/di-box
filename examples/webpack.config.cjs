@@ -49,6 +49,7 @@ var oConfig = {
 		]
 	},
 	resolve: {
+		// чтобы в ts import без разрешения ts можно было писать
 		extensions: ['.ts', '.js']
 	},
 	devServer: {
@@ -62,8 +63,6 @@ var oConfig = {
 
 		watchContentBase: true, // HMR для html частей приложения
 
-		//contentBase: __dirname,
-
 		overlay: true, // display error overlay
 		stats: "errors-only"
 	}
@@ -71,7 +70,7 @@ var oConfig = {
 
 module.exports = ( oEnv, oArgv ) => {
 	if (oArgv.mode === 'development') {
-		oConfig.devtool = 'eval-cheap-module-source-map';
+		oConfig.devtool = 'cheap-source-map';
 	}
 	if (oArgv.mode === 'production') {
 		oConfig.devtool = 'source-map';
