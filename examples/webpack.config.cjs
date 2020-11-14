@@ -1,15 +1,10 @@
 var oConfig = {
 	entry: {
-		"example-di-box": __dirname + '/example-di-box/index.js',
-		"example-di-box-ts": __dirname + '/example-di-box-ts/index.ts',
-		"example-inversify": __dirname +'/example-inversify/index.ts',
-		"example-typedi": __dirname +'/example-typedi/index.ts',
-		"example-awilix": __dirname +'/example-awilix/index.ts',
-		"example-tsyringe": __dirname +'/example-tsyringe/index.ts',
-		"example-bottlejs": __dirname +'/example-bottlejs/index.js',
+		"example-js": __dirname +"/example-js.js",
+		"example-ts": __dirname +"/example-ts.ts",
 	},
 	output: {
-		filename: "[name]/index.js",
+		filename: "[name].js",
 		chunkFilename: '[name].js',
 		path: __dirname + '/build/',
 		publicPath: '/build/',

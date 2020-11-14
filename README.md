@@ -7,13 +7,13 @@
 import {Box} from "di-box";
 
 class Service {
-	method() {}
+	work() {}
 }
 
 class App {
 	oneService;
 	main() {
-		this.oneService().method();
+		this.oneService().work();
 	}
 }
 
@@ -40,6 +40,37 @@ class AppBox extends Box {
 const oBox = new AppBox();
 oBox.Service = Service;
 oBox.App = App;
+
 const oApp = oBox.newApp();
 oApp.main(); 
 ```
+
+Автоматически проходит по всем свойствам создаваемых компонент и
+вызывает ошибку, если хоть одно свойство undefined, предыдущий пример:
+
+```javascript
+...
+	newApp() {
+		const oApp = new this.App();
+		//oApp.oneService = this.oneService;
+		return oApp; // будет ошибка oneService is undefined 
+	}
+...
+```
+
+Есть возможность изменить это поведение
+```javascript
+...
+const oBox = new AppBox( null );
+oBox.Service = Service;
+
+const oApp = oBox.newApp(); // Error App is undefined
+...
+```
+
+Сделано с душой ❤️.
+
+Буду рад, если пакет будет полезен.
+
+Поставьте github ⭐ - добавьте энергии автору для развития и поддержки.
+

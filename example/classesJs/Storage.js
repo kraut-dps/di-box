@@ -1,1 +1,0 @@
-export {StorageBase as Storage} from "../classesBase/StorageBase.js";

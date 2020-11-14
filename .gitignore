@@ -1,7 +1,7 @@
 /.idea/
 /coverage/
-/example/build/
-/example/node_modules/
-/example/package-lock.json
+/examples/build/
+/examples/node_modules/
+/examples/package-lock.json
 /node_modules/
 /package-lock.json

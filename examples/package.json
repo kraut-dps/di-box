@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "di-box-examples",
   "version": "0.0.1",
   "description": "",
   "type": "module",
@@ -8,14 +8,7 @@
     "prod": "webpack --config webpack.config.cjs --mode=production"
   },
   "dependencies": {
-    "@owja/ioc": "^1.0.1",
-    "awilix": "^4.2.6",
-    "bottlejs": "^2.0.0",
-    "di-box": "^0.1.0",
-    "inversify": "^5.0.1",
-    "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.3.0",
-    "typedi": "^0.8.0"
+    "di-box": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.11.6",
