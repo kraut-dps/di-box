@@ -1,6 +1,6 @@
 {
   "name": "di-box",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Lightweight dependency injection library",
   "author": "kraut-dps",
   "license": "MIT",

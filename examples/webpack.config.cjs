@@ -64,7 +64,9 @@ var oConfig = {
 		watchContentBase: true, // HMR для html частей приложения
 
 		overlay: true, // display error overlay
-		stats: "errors-only"
+		stats: "errors-only",
+
+		clientLogLevel: "warning"
 	}
 };
 
