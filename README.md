@@ -45,7 +45,7 @@ const oApp = oBox.newApp();
 oApp.main(); 
 ```
 
-[Запустить в Codesandbox](https://codesandbox.io/s/github/kraut-dps/di-box/tree/0.2.0/examples/?file=/example-js.js)
+[Запустить в Codesandbox](https://codesandbox.io/s/github/kraut-dps/di-box/tree/0.2.2/examples/?file=/example-js.js)
 ( версии js и ts с интерфейсами )
 
 По умолчанию автоматически проходит по всем свойствам объекта Box и
