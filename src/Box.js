@@ -1,5 +1,5 @@
 /**
- * @typedef {{ bNeedSelfCheck: boolean?, sNeedCheckPrefix: string?, sProtectedPrefix: string? }} IOpts
+ * @typedef {{ bNeedSelfCheck?: boolean, sNeedCheckPrefix?: string?, sProtectedPrefix?: string? }} IOpts
  */
 /**
  * коробка конструкторов

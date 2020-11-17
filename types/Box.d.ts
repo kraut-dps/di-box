@@ -1,5 +1,5 @@
 /**
- * @typedef {{ bNeedSelfCheck: boolean?, sNeedCheckPrefix: string?, sProtectedPrefix: string? }} IOpts
+ * @typedef {{ bNeedSelfCheck?: boolean, sNeedCheckPrefix?: string?, sProtectedPrefix?: string? }} IOpts
  */
 /**
  * коробка конструкторов
@@ -87,7 +87,7 @@ export class Box {
     _isFn(sPropName: string): boolean;
 }
 export type IOpts = {
-    bNeedSelfCheck: boolean | null;
-    sNeedCheckPrefix: string | null;
-    sProtectedPrefix: string | null;
+    bNeedSelfCheck?: boolean;
+    sNeedCheckPrefix?: string | null;
+    sProtectedPrefix?: string | null;
 };

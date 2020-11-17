@@ -21,7 +21,7 @@ class AppBox extends Box {
 		public Service: IServiceConstructor,
 		public App: IAppConstructor
 	) {
-		super();
+		super( { bNeedSelfCheck: false, sNeedCheckPrefix: null } );
 	}
 
 	newService() {

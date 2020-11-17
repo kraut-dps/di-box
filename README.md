@@ -52,55 +52,64 @@ oApp.main();
 вызывает ошибку, если хоть одно свойство undefined, предыдущий пример:
 
 ```javascript
-...
-
     const oBox = new AppBox();
     oBox.Service = Service;
     //oBox.App = App;
     const oApp = oBox.newApp(); // будет ошибка di-box App is undefined
-...
 ```
 
 Можно убрать эту проверку:
 ```javascript
-...
-    const oBox = new AppBox( { bNeedSelfCheck: false } );
-...
+const oBox = new AppBox( { bNeedSelfCheck: false } );
 ```
 
 Таким же образом по умолчанию проверяет все объекты, возвращаемые функциями с префиксом "new":
 
 ```javascript
-...
     newApp() {
         const oApp = new this.App();
         //oApp.oneService = this.oneService;
         return oApp; // будет ошибка di-box oneService is undefined 
     }
-...
 ```
 
 Можно убрать эту проверку:
 ```javascript
-...
 const oBox = new AppBox( { sNeedCheckPrefix: null } );
-...
 ```
 
 Пропуск проверки в конкретном случае:
 ```javascript
-...
 	newXhr() {
 		this.skipCheck();
 		return new XMLHttpRequest();
 	}
-...
 ```
 
 Сброс созданных синглетонов/сервисов:
 ```javascript
-...
 oBox.reset();
+```
+
+Соединение нескольких Box:
+```javascript
+class Box1 extends Box {
+    ...
+    oneService() {
+        ...
+    }
+    ...
+}
+class Box2 extends Box {
+    ...
+    oneService;
+}
+
+const oBox1 = new Box1();
+...
+const oBox2 = new Box2();
+...
+oBox2.oneService = oBox1.oneService;
 ...
 ```
 
